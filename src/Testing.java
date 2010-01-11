@@ -98,7 +98,7 @@ public class Testing extends TestCase{
 		assertTrue(q.add(3));
 		assertTrue(q.add(5));
 		assertTrue(q.add(2));
-		assertEquals(3,q.toArray().length);
+		assertEquals(3,q.size());
 		points += 2;
 	}
 

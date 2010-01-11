@@ -1,49 +1,53 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
-public class PriorityQueue extends ArrayList {
-	private Comparable[] array;
-	private int index;
+public class PriorityQueue<T extends Comparable<? super T>> extends ArrayList<T> {
 	
 	public PriorityQueue() {
-        array = new Comparable [16];
-        index = 0;
-    }
-
-    public boolean empty () {
-        return index == 0;
+		super();
     }
     
-    public void insert (Comparable item) {
-        if (index == array.length) {
-            resize();
-        }
-        array[index] = item;
-        index++;
-    }
-    
-    private void resize() {
+    public boolean add(T element) {
+    	if(element == null) {
+    		throw new NullPointerException();
+    	}
     	
+    	super.add(element);
+    	return true;
     }
     
-    public Comparable remove () {
-        if (index == 0) return null;
-
-        int maxIndex = 0;
-
-        // find the index of the item with the highest priority
-        for (int i=1; i<index; i++) {
-            if (array[i].compareTo (array[maxIndex]) > 0) {
-                maxIndex = i;
-            }
-        }
-        Comparable result = array[maxIndex];
-
-        // move the last item into the empty slot
-        index--;
-        array[maxIndex] = array[index];
-        return result;
-   }
+    public boolean offer(T o) {
+        return add(o);
+    }
     
+    public T peek() {
+    	if(super.isEmpty()) {
+    		return null;
+    	}
+    	return super.get(0);
+    }
+    
+    public T poll() {
+    	if(super.isEmpty()) {
+    		return null;
+    	}
+    	
+    	T temp = super.get(0);
+    	remove(temp);
+    	return temp;
+    }
+    
+    public boolean remove(T element) {
+        Iterator<T> i = super.iterator();
+        while(i.hasNext()) {
+        	if(i.equals(element)) {
+        		i.remove();
+        		return true;
+        	}
+        	i.next();
+        }
+        return false;
+    }
  
 }
